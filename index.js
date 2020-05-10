@@ -15,7 +15,7 @@ const courses = [
     {id: 2, name: 'course2'},
     {id: 3, name: 'course3'}
     
-]
+];
 //1. display all courses - simple with out validation 
 app.get('/api/courses', (req, res) => {
     fs.readFile(COURSES_PATH, "utf-8", (err, content) => {
