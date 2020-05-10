@@ -11,10 +11,9 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 const courses = [
-    {id: 1, name: 'course1'},
-    {id: 2, name: 'course2'},
-    {id: 3, name: 'course3'}
-    
+    { id: 1, name: 'course1' },
+    { id: 2, name: 'course2' },
+    { id: 3, name: 'course3' }
 ];
 //1. display all courses - simple with out validation 
 app.get('/api/courses', (req, res) => {
@@ -52,6 +51,17 @@ app.post("/api/courses", (req, res) => {
             res.send(stringifiedCourses);
         });
     });
+});
+
+//4. update
+app.put('/api/courses/:id', (req, res) => {
+    const course = courses.find(c => c.id === parseInt(req.params.id)); //look up the course
+    if (!course) return res.status(404).send('The course with the given id was not found'); //if not existing, return 404
+    //const result = validateCourse(req.body);   
+    const { error } = validateCourse(req.body);
+    if (error) return res.status(400).send(result.error.details[0].message); //if invalid return 400 bad request   
+    course.name = req.body.name; //update the course
+    res.send(course); //return the updated course
 });
 
 //validation function
