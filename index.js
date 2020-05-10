@@ -10,7 +10,12 @@ const COURSES_PATH = __dirname + "/courses.json";
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-
+const courses = [
+    {id: 1, name: 'course1'},
+    {id: 2, name: 'course2'},
+    {id: 3, name: 'course3'}
+    
+]
 //1. display all courses - simple with out validation 
 app.get('/api/courses', (req, res) => {
     fs.readFile(COURSES_PATH, "utf-8", (err, content) => {
@@ -21,7 +26,6 @@ app.get('/api/courses', (req, res) => {
 
 //2. display one course
 app.get('/api/courses/:id', (req, res) => {
-    fs.readFile(COURSES_PATH, "utf-8", callback);
     const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) return res.status(404).send('The course with the given id was not found');
     res.send(course);
